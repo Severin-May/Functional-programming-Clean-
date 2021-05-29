@@ -10,8 +10,8 @@ import StdEnv
 //I declare that this solution is my own work.
 //I have not copied or used third party solutions.
 //I have not passed my solution to my classmates, neither  made it public.
-//Students’ regulation of Eotvos Lorand University (ELTE Regulations Vol. II. 74/C.) 
-//states that as long as a student presents another student’s work - 
+//Studentsâ€™ regulation of Eotvos Lorand University (ELTE Regulations Vol. II. 74/C.) 
+//states that as long as a student presents another studentâ€™s work - 
 //or at least the significant part of it - as his/her own performance, it will count as a disciplinary fault. 
 //The most serious consequence of a disciplinary fault can be dismissal of the student from the University.
 
@@ -184,6 +184,285 @@ getMax list = maxList [ fst x * snd x \\ x <- list]
 //Start = largestRect [(420,69)] //(420,69)
 //Start = largestRect ([(1,1),(2,3),(4,6)])//(4,6)
 //Start = largestRect [(1,2),(2,3),(3,4),(2,6),(2,1)] //(2,6) //Solution gives (3,4) because area is same with max!
+
+//another midterm 
+
+/*
+1. Given a list of lists of Int.
+For each element greater than 5 of each sublist create a triple like (number, sum, product)
+where
+number -> the number itself
+sum -> the sum of all the integers in the [1,number) interval
+product -> product of all the integers in the [1,number)
+
+Example:
+[[1,2,4],[6,8,2,1]] -> [[],[(6,15,120),(8,28,5040)]]
+because 1,2,4,2,1 are not greater than 5,
+15 = 1+2+3+4+5, 120 = 1*2*3*4*5
+28 = 1+2+3+4+5+6+7. 5040 = 1*2*3*4*5*6*7
+*/
+
+numaux :: [Int] -> [(Int,Int,Int)]
+numaux [] = []
+numaux [x:xs]
+| x > 5 = [(x, sum [1..x-1], prod [1..x-1])] ++ numaux xs
+= numaux xs
+//Start = numaux [6,8,2,1]
+
+numSumProd::[[Int]]->[[(Int,Int,Int)]]
+numSumProd [] = []
+numSumProd lsts = map numaux lsts
+
+//Start = numSumProd [[1,2,4],[6,8,2,1]]//[[],[(6,21,720),(8,36,40320)]] should be [[],[(6,15,120),(8,28,5040)]]
+//Start = numSumProd [[1..6],[1..5]]//[[(6,15,120)],[]]
+//Start = numSumProd [[1,2,2],[]]//[[],[]]
+//Start = numSumProd []//[]
+/* done */
+
+/*
+2. Write a function that will do a circle rotation of the numbers in a list of tuples.
+For example: rotate 1 [(1,2),(3,4),(5,6)] will give you [(2,3),(4,5),(6,1)]
+*/
+
+/*
+rotateOnce :: [(Int,Int)] -> [(Int,Int)]
+rotateOnce list = func list ++ [(snd (last list), fst (hd list))]
+where
+	func :: [(Int,Int)] -> [(Int,Int)]
+	func [] = []
+	func [x] = []
+	func [x,y:xs] 
+	= [ (snd x, fst y) : func [ y :xs] ]
+*/  //this function rotates it once only
+
+rotateOnce :: [(Int,Int)] -> [(Int,Int)]
+rotateOnce list = func list ++ [(snd (last list), fst (hd list))]
+where
+	func :: [(Int,Int)] -> [(Int,Int)]
+	func [] = []
+	func [x] = []
+	func [x,y:xs] 
+	= [ (snd x, fst y) : func [ y :xs] ]
+	
+rotate :: Int [(Int,Int)] -> [(Int,Int)]
+rotate n list = func 0 n list
+where
+	func x n list
+	|x >= n = list
+	= func (x+1) n (rotateOnce list)
+Start = rotate 1 [(1,2),(3,4),(5,6)] //[(2,3),(4,5),(6,1)]
+//Start = rotate 3 [(1,2),(3,4),(5,6)] //[(4,5),(6,1),(2,3)]
+//Start = rotate 234 [(1,2),(3,4),(5,6)] //[(1,2),(3,4),(5,6)]
+//Start = rotate 2378475 [(53,73),(35,71),(52,42),(56,78),(42,69),(457,1367),(32,283623),(-363,4643),(0,0),(35,-279427)] //[(4643,0),(0,35),(-279427,53),(73,35),(71,52),(42,56),(78,42),(69,457),(1367,32),(283623,-363)]
+
+
+/*
+3. Write a function which takes a list of lists
+returns the product of all the elements of
+the palindrom lists
+example: [[1,2,1], [4,5], [1,2,3,2,1]] -> 24
+because the lists ([1,2,1] and [1,2,3,2,1]) are
+palindroms so we multiply all of their elements together
+Note: If there are no palindroms, return 1
+*/
+
+isPali :: [a] -> Bool | == a
+isPali [] = False
+isPali lst = lst == reverse lst
+//Start = isPali [1,2,4,2,1]
+
+prodPali :: [[Int]] -> Int //| +a
+prodPali [] = 1
+prodPali [x:xs]
+| isPali x = (prod x) * prodPali xs
+= prodPali xs
+//Start = prodPali [[1,2,1], [4,5], [1,2,3,2,1]] //24
+//Start = prodPali [[1.0,11.0,2.0], [], [10.1,10.1]] // 102.01
+//Start = prodPali [[1,3]] // 1
+/* does not work for real */
+
+
+/*
+4. Consider following example:
+"aaaabbbcaddd" -> [(4, 'a'), (3, 'b'), (1, 'c'), (1, 'a'), (3, 'd')]
+i.e. consecutive duplicates are grouped together and their count is taken in a tuple
+together with the character.
+This method is called Run-length encoding.
+Your task is to implement "encode" function which does this.
+*/
+
+//split :: [Char] -> [[Char]]
+//split [] = []
+//split [x:xs] = [x] ++ (split xs)
+//Start = ['a','b','c']
+
+// Start = encode "aaaabbbcaddd" // [(4, 'a'), (3, 'b'), (1, 'c'), (1, 'a'), (3, 'd')]
+// Start = encode "" // []
+// Start = encode "aa" // [(2, 'a')]
+// Start = encode "abcde" // [(1, 'a'), (1, 'b'), (1, 'c'), (1, 'd'), (1, 'e')]
+
+
+/*
+7. Given a list of Integers. Write a function that creates a list of triples in the following way:
+[1,2,3,4] -> [(1,2,3),(4,0,0)]
+[1,2,3,4,5] -> [(1,2,3),(4,5,0)]
+[1,2,3,4,5,6] -> [(1,2,3),(4,5,6)]
+It basically groups 3 consecutive elements into a triple tuple.
+*/
+
+createTriples :: [Int]->[(Int,Int,Int)]
+createTriples [] = []
+createTriples [x] = [(x, 0, 0)]
+createTriples [x,y] = [(x,y, 0)]
+createTriples [x,y,z:xs] = [(x,y,z)] ++ createTriples xs 
+
+//Start = createTriples [1..6]//[(1,2,3),(4,5,6)]
+//Start = createTriples [1..5]//[(1,2,3),(4,5,0)]
+//Start = createTriples [1..4]//[(1,2,3),(4,0,0)]
+//Start = createTriples [2..15]//[(2,3,4),(5,6,7),(8,9,10),(11,12,13),(14,15,0)]
+/* done */
+
+
+/*
+8. Write a function which takes a list of lists
+of integers and returns the lists where
+whether the difference between the maximum
+and the average is bigger than or equal to a given
+number
+*/
+
+diffAvgMax :: [[Int]] Int -> [[Int]]
+diffAvgMax [] _ = []
+diffAvgMax lsts n = [a\\ a<- lsts | ((maxList a) - (avg a)) >= n]
+
+//Start = diffAvgMax [[1,2,4], [1,2]] 2 // [[1,2,4]]
+//Start = diffAvgMax [[1]] 1 // []
+//Start = diffAvgMax [[1..10], [20..30], [1..100]] 10 // [1..100]
+/* done */
+
+/*
+10. Write evalIntExpr function which takes list of expressions
+and returns list with their answers. Each expression is represented
+with tuple - (Operator, Int, Int). Operator denotes type of expression
+and 2 integers are arguments for it.
+Operators:
+* ADD a b - a+b : addition
+* SUB a b - a-b : subtraction
+* MULT a b - a*b : multiplication
+* DIV a b - a/b : division
+* REM a b - a%b : remainder
+* CONC a b - ab : concatenation, example: CONC 120 71 -> 12071
+*/
+:: Operator = ADD | SUB | MULT | DIV | REM | CONC
+
+instance == Operator 
+where
+	(==) ADD ADD = True
+	(==) SUB SUB = True
+	(==) MULT MULT = True
+	(==) DIV DIV = True
+	(==) REM REM = True
+	(==) CONC CONC = True
+	(==) _ _ = False
+	
+evalaux :: (Operator, Int, Int) -> Int
+evalaux (o,x,y)
+| o == ADD = x+y
+| o == SUB = x-y
+| o == MULT = x*y
+| o == DIV = x/y
+| o == REM = x rem y
+| o == CONC = toInt((toString x) +++ (toString y))
+
+evalIntExpr :: [(Operator,Int,Int)] -> [Int]
+evalIntExpr [] = []
+evalIntExpr [x:xs] = [evalaux x] ++ evalIntExpr xs
+//Start = evalIntExpr [] // []
+//Start = evalIntExpr [(ADD,12,17),(SUB,3,9),(MULT,2,3),(DIV,10,3),(REM,10,3),(CONC,120,71)] // [29,-6,6,3,1,12071]
+//Start = evalIntExpr [(ADD,12,17),(CONC,0,5),(CONC,13,0),(MULT,1,1)] // [29,5,130,1]
+/* done */
+
+
+/*
+5. Given the list of tuples. Each tuple has 3 element: L, R and Step.
+For each tuple generate list of numbers from L to R increasing with Step (L,L+Step,L+2*Step...).
+For example if L is 1, R is 10 and step is 4 list would be [1,5,9]. Your function should return
+list of lists.
+*/
+
+expaux :: (Int,Int,Int) -> [Int]
+expaux (l,r,s) = [a\\a <- [l..r] | a < r]
+//Start = expaux (1,10,4)
+
+//expandList :: [(Int,Int,Int)] -> [[Int]]
+//expandList [] = []
+//expandList [x:xs] = [a+ thd3 a\\l <- [l..] | l+s <= r] ++ expandList xs
+
+//Start = expandList [(1,10,4), (3,5,4), (5,4,1), (1,10,3)] // [[1,5,9],[3],[],[1,4,7,10]]
+// Start = expandList [] // []
+// Start = expandList [(5,3,-1),(2,13,3),(1,8,1)] // [[5,4,3],[2,5,8,11],[1,2,3,4,5,6,7,8]]
+// Start = expandList [(1,12,100), (2,5,10), (4,-1,-10)] // [[1],[2],[4]]
+
+
+:: Month = January | February | March | April | May | June | July | August | September | October | November | December
+
+montonum :: Month -> Int
+montonum January = 1
+montonum February = 2
+montonum March = 3
+montonum April = 4
+montonum May = 5
+montonum June = 6
+montonum July = 7
+montonum August = 8
+montonum September = 9
+montonum October = 10
+montonum November = 11
+montonum December = 12
+
+numtomon :: Int -> Month
+numtomon 1 = January
+numtomon 2 = February
+numtomon 3 = March
+numtomon 4 = April
+numtomon 5 = May
+numtomon 6 = June
+numtomon 7 = July
+numtomon 8 = August
+numtomon 9 = September
+numtomon 10 = October
+numtomon 11 = November
+numtomon 12 = December
+
+/*
+6. Write a function that takes a list of months and sorts the list by order of the months.
+Notably, January should be sorted before February, which should be sorted before March... and so on and so forth.
+Duplicates can be kept
+*/
+
+monthSort :: [Month] -> [Month]
+monthSort [] = []
+monthSort lst = map numtomon (sort(map montonum lst))
+//Start = monthSort [February, October, January, June, December, May, April, October] // [January,February,April,May,June,October,October,December]
+//Start = monthSort [January, January, October, June, December, May, April, October] // [January,January,April,May,June,October,October,December]
+//Start = monthSort [] //[]
+/* done */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
