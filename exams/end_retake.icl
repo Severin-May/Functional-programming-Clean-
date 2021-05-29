@@ -10,8 +10,8 @@ import StdEnv
 //I declare that this solution is my own work.
 //I have not copied or used third party solutions.
 //I have not passed my solution to my classmates, neither  made it public.
-//Students’ regulation of Eötvös Loránd University (ELTE Regulations Vol. II. 74/C.) 
-//states that as long as a student presents another student’s work - 
+//Studentsâ€™ regulation of EÃ¶tvÃ¶s LorÃ¡nd University (ELTE Regulations Vol. II. 74/C.) 
+//states that as long as a student presents another studentâ€™s work - 
 //or at least the significant part of it - as his/her own performance, it will count as a disciplinary fault. 
 //The most serious consequence of a disciplinary fault can be dismissal of the student from the University.
 /*
@@ -334,4 +334,390 @@ where
 // Start::[Int] // Uncomment this line too, to run next test
 // Start = filterColoredTree Leaf Green OR isOdd isEven // []
 //-------------------------------------------------------------------------------
+
+
+//another endterm
+
+
+module kairat
+import StdEnv
+
+
+/* 3
+
+ Create an instances +, -, <, == for RGBColor
+
+ + should add respective parameters
+
+ - should subtract respective parameters
+
+ == is true if all thre parameters are equal
+
+ < Compare them lexicographically (if reds are equal compare greens and so on)
+
+*/
+
+:: RGBColor = { r :: Int, g :: Int, b :: Int}
+
+instance + RGBColor
+where
+	(+) a b = {r = a.r+b.r, g = a.g+b.g, b = a.b+b.b}
+
+instance - RGBColor
+where
+	(-) a b = {r = a.r-b.r, g = a.g-b.g, b = a.b-b.b}
+
+instance == RGBColor
+where
+	(==) a b
+	| a.r == b.r && a.g == b.g && a.b == b.b = True
+	= False
+	
+instance < RGBColor
+where
+	(<) a b
+	| a.r == b.r = a.g <> b.g 
+	| a.r == b.r && a.g == b.g = a.b <> b.b 
+	= False
+
+//Start = {r = 0, g = 0, b = 0} == {r = 0, g = 0, b = 0} // True
+//Start = {r = 0, g = 0, b = 0} <> {r = 0, g = 0, b = 0} // False
+// Start = {r = 30, g = 150, b = 231} == {r = 10, g = 30, b = 231} // False
+//Start = {r = 30, g = 150, b = 231} - {r = 1, g = 1, b = 1} // {r = 29, g = 149, b = 230}
+//Start = {r = 30, g = 150, b = 231} + {r = 1, g = 1, b = 1} // {r = 31, g = 152, b = 232}
+//Start = {r = 30, g = 150, b = 231} < {r = 10, g = 30, b = 231} // False
+//Start = {r = 30, g = 150, b = 231} < {r = 30, g = 150, b = 231} // False
+//Start = {r = 30, g = 150, b = 231} < {r = 30, g = 151, b = 231} // True
+
+
+
+:: Major = Finance | CS | Math | Physics | Economy | Linguistics
+
+
+:: Course = {name::String, major::Major, credits::Int}
+
+
+
+
+OOP::Course
+
+
+OOP = {name="OOP",major=CS, credits=5}
+
+
+Discrete_math::Course
+
+
+Discrete_math = {name="Discrete_math",major=Math, credits=4}
+
+
+Relativity::Course
+
+
+Relativity = {name="Relativity", major=Physics, credits=6}
+
+
+Functional::Course
+
+
+Functional = {name="Functional", major=CS, credits=5}
+
+
+Quantum_mechanics::Course
+
+
+Quantum_mechanics = {name="Quantum_mechanics", major=Physics, credits=4}
+
+
+Corporate_finance::Course
+
+
+Corporate_finance = {name="Corporate_finance", major=Finance, credits=6}
+
+
+Venture_captical::Course
+
+
+Venture_captical = {name="Venture_captical", major=Finance, credits=6}
+
+
+Macroeconomics::Course
+
+
+Macroeconomics = {name="Macroeconomics", major=Economy, credits=6}
+
+
+Microeconomics::Course
+
+
+Microeconomics = {name="Microeconomics", major=Economy, credits=6}
+
+
+Numerical_Methods::Course
+
+
+Numerical_Methods = {name="Numerical_Methods", major=Math, credits=4}
+
+
+Cryptography::Course
+
+
+Cryptography = {name="Cryptography", major=CS, credits=2}
+
+
+Phonology::Course
+
+
+Phonology = {name="Phonology", major=Linguistics, credits=3}
+
+
+Morphology::Course
+
+
+Morphology = {name="Morphology", major=Linguistics, credits=3}
+
+
+
+/* 5
+
+ Create an instance `-` for the record Course, 
+
+ such that two records A and B when subtracted (A-B) will give
+
+ a record Course whose name is the first letter of A's name, 
+
+ major is B's major and credits is A's credits
+
+ minus B's credits
+
+*/
+
+//:: Course = {name::String, major::Major, credits::Int}
+
+instance - Course
+where
+	(-) a b = {name = toString(a.name.[0]), major = b.major, credits = a.credits - b.credits}
+
+
+//Start = Morphology - Quantum_mechanics // (Course "M" Physics -1)
+
+//Start = Corporate_finance - OOP // (Course "C" CS 1)
+
+//Start = Quantum_mechanics - Relativity // (Course "Q" Physics -2)
+
+
+/* 9
+
+ Having a DAY algebraic data type, write a function
+
+ to output the day after n days of the day.
+
+ for example: MONDAY 2 -> WEDNESDAY
+
+*/
+
+daytonum :: DAY -> Int
+daytonum MONDAY = 0
+daytonum TUESDAY = 1
+daytonum WEDNESDAY = 2
+daytonum THURSDAY = 3
+daytonum FRIDAY = 4
+daytonum SATURDAY = 5
+daytonum SUNDAY = 6
+
+numtoday :: Int -> DAY
+numtoday 0 = MONDAY 
+numtoday 1 = TUESDAY 
+numtoday 2 = WEDNESDAY
+numtoday 3 = THURSDAY
+numtoday 4 = FRIDAY 
+numtoday 5 = SATURDAY
+numtoday 6 = SUNDAY
+
+
+:: DAY = MONDAY | TUESDAY | WEDNESDAY | THURSDAY | FRIDAY | SATURDAY | SUNDAY
+
+getDay :: DAY Int -> DAY
+getDay day n = numtoday (((daytonum day) + n) rem 7 )
+
+//Start = getDay MONDAY 0 // MONDAY //0+0 = 0 rem 7= 0 
+//Start = getDay MONDAY 2 // WEDNESDAY //0+2 = 2 rem 7 = 2
+//Start = getDay FRIDAY 8 // SATURDAY //4+8= 12 rem 7 = 5
+//Start = getDay TUESDAY 300 // MONDAY //1+300 rem 7 = 0
+
+
+/* 7
+
+ A coach is trying to choose the player of the year, in his team
+
+ so let's help him/her doing that, the coach wants the player to have the
+
+ highest overall.
+
+ The coach is adding 0.1 to the overall if the player was good.
+
+ NOTE: If there are two players with the highest overall, choose any.
+
+*/
+
+
+::Status = Good | Bad
+
+::Player = {player_name :: String, overall :: Real, status :: Status}
+
+instance == Status
+where
+	(==) Good Good = True
+	(==) Bad Bad = True
+	(==) _ _ = False
+
+
+changeOver :: Player -> Player
+changeOver p
+| p.status == Good = {p & overall = p.overall  + 0.1}
+= p
+//Start = changeOver {player_name = "Khalid", overall = 4.0, status = Good}
+
+instance < Player
+where
+	(<) a b = a.overall < b.overall
+
+bestPlayer :: [Player] -> Player
+bestPlayer [x:xs] = maxList [changeOver p\\p <- [x:xs] | p.status == Good]
+
+
+//Start = bestPlayer [{player_name = "Khalid", overall = 4.0, status = Good},{player_name = "Peter", overall = 3.7, status = Good},{player_name = "Yoko", overall = 2.9, status = Bad}] // (Player "Khalid" 4.1 Good)
+//Start = bestPlayer [{player_name = "Khalid", overall = 3.7, status = Bad},{player_name = "Peter", overall = 3.7, status = Good},{player_name = "Yoko", overall = 2.9, status = Bad}] // (Player "Peter" 3.8 Good)
+
+
+
+/* 1
+
+ Given an array of tuples of empty or single element lists.
+
+ Give back a list of arrays in the following form
+
+ {([2],[1]),([3],[4]),([5],[])} -> [{2,1},{3,4},{5,0}]
+
+*/
+
+conv :: ([Int],[Int]) -> {Int}
+conv ([],[]) = {0,0}
+conv (a, []) = {hd a, 0}
+conv ([],b) = {0, hd b}
+conv (a,b) = {hd a,hd b}
+//Start = conv ([2],[])
+
+toList :: {a} -> [a]
+toList array = [a\\a<-: array]
+
+conversion::{([Int],[Int])} -> [{Int}]
+conversion array = map conv (toList array)
+
+//Start = conversion {([2],[1]),([3],[4]),([5],[])}//[{2,1},{3,4},{5,0}]
+//Start = conversion {([],[]),([],[4]),([5],[])}//[{0,0},{0,4},{5,0}]
+//Start = conversion {([4],[])}//[{4,0}]
+
+
+/* 2
+
+ Given an array of arrays of triples of Ints and a condition over triples of Ints.
+
+ Return the index of the subarray having the highest number of triples satisfying the condition.
+
+ In case there are more subarrays with the same number return the first one.
+
+ indexing starts from 1 (i+1).
+
+
+
+ Example:
+
+ {{(1,2,3)},{(2,2,2),(3,3,3),(3,3,3)},{(1,1,1)}} condition: all 3 numbers are the same ->
+
+ first subarray - 0
+
+ second subarray - 3
+
+ third subarray -1 
+
+ Solution: 2 (because the second array has the highest count)
+
+*/
+
+condit :: {(Int,Int,Int)} ((Int,Int,Int)->Bool) -> Int
+condit arr condi = sum[1\\x <-: arr | condi x ]
+//Start = condit {(2,2,2),(3,3,3)} cond1 
+
+mostTriplesCond::{{(Int,Int,Int)}} ((Int,Int,Int)->Bool) -> Int
+mostTriplesCond arrays condi = (maxList[condit x condi \\x<-: arrays]) //hd[1\\y <-[condit x condi \\x<-: arrays]| y==(maxList[condit x condi \\x<-: arrays])] 
+//The cond1 and cond2 functions are used in the start cases, please don't delete them
+
+
+cond1::(Int,Int,Int) ->Bool
+cond1 (a,b,c)= a==b && b==c
+//Start = mostTriplesCond {{(1,2,3)},{(2,2,2),(3,3,3)},{(1,1,1)}} cond1//2
+//Start = mostTriplesCond {{(1,2,3)},{(2,2,2),(3,3,3)},{(2,2,2),(3,3,3)},{(1,1,1)}} cond1 //2
+cond2::(Int,Int,Int) ->Bool
+cond2 (a,b,c)= a<b && b==c
+//Start = mostTriplesCond {{(1,2,3)},{(2,2,2),(3,3,3)},{(2,2,2),(3,3,3)},{(0,1,1)}} cond2 //4
+
+
+// 6 :: Major = Finance | CS | Math | Physics | Economy | Linguistics
+
+instance == Major
+where
+	(==) Finance Finance = True
+	(==) CS CS = True
+	(==) Math Math = True
+	(==) Physics Physics = True
+	(==) Economy Economy = True
+	(==) Linguistics Linguistics = True
+	(==) _ _ = False
+	
+majtonum :: Major -> Int
+majtonum Finance = 323
+majtonum CS = 375
+majtonum Math = 350
+majtonum Physics = 369
+majtonum Economy = 358
+majtonum Linguistics = 320
+
+
+
+value :: [Course] -> [(String, Real)]
+value [] = abort "None"
+value [x:xs] = [(x.name, toReal((majtonum x.major)/15/5)/toReal(x.credits))\\x <- [x:xs]]
+
+//Start = value [Corporate_finance, OOP, Microeconomics]
+
+instance < (String, Real)
+where
+	(<) x y = (snd x) < (snd y)
+
+valuable :: [Course] -> (String, Real)
+valuable [] = abort "None"
+valuable list = maxList (value list)
+
+//Start = valuable [Corporate_finance, OOP, Microeconomics] // ("OOP",1)
+
+//Start = valuable [Morphology, Macroeconomics, Quantum_mechanics] // ("Morphology",1.42222222222222)
+
+//Start = valuable [Venture_captical, Relativity, Cryptography] // ("Cryptography",2.5)
+
+//Start = valuable [Discrete_math] // ("Discrete_math",1.16666666666667)
+
+//Start = valuable [] // "None"
+
+
+
+
+
+
+
+
+
+
+
+
 
