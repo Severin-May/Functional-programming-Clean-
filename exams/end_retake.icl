@@ -1,19 +1,6 @@
 module end_retake
 import StdEnv
 
-// Please fill the data required below.
-//<Name> Aichurok Kanatbekova
-//<Neptun ID> RiIMR52
-//Functional Programming & end-term-retake
-//2021.January.11
-//This solution was submitted and prepared by <Name, Neptun ID> for the end-term-retake assignment of the Functional Programming course.
-//I declare that this solution is my own work.
-//I have not copied or used third party solutions.
-//I have not passed my solution to my classmates, neither  made it public.
-//Students’ regulation of Eötvös Loránd University (ELTE Regulations Vol. II. 74/C.) 
-//states that as long as a student presents another student’s work - 
-//or at least the significant part of it - as his/her own performance, it will count as a disciplinary fault. 
-//The most serious consequence of a disciplinary fault can be dismissal of the student from the University.
 /*
 	1. Create a `toInt` instance for the Person record. An integer representation of a person
 	is the sum of the length of its firstName, their age and height.
@@ -35,8 +22,6 @@ Harry={firstName="Harry",age=42,height=180}
 Emilia2::Person
 Emilia2={firstName="Emilia",age=15,height=180}
 
-
-// TO DO instance
 instance toInt Person
 where
 	toInt a = size(a.firstName) + a.age + a.height
@@ -48,7 +33,6 @@ where
 	2. Create an instance of `isEven` for the Person record. A person is even if the sum of their
 	age and height is even.
 */
-// TO DO instance
 instance isEven Person
 where
 	isEven a
@@ -131,7 +115,6 @@ continentsPrimeI conts = [x.contName\\x <- conts | (lala x)]
 //Start=continentsPrimeI [Europe,SouthAmerica,Asia]//["South America","Asia"]
 
 
-
 // 7. You are given array of integers.
 // Your function should return true if each value appears at least twice in the array, and it should return false otherwise.
 
@@ -167,10 +150,8 @@ dict2=[("a",1)]
 
 //keysNum::(Dictionary String Int)->Int
 
-
 //Start=keysNum dict//3
 //Start=keysNum dict2//1
-
 
 /*
 	b) valueForKey - Gives back the value associated with a given key.
@@ -207,12 +188,10 @@ keysNum::(Dictionary String Int)->Int
 keysNum [] = 0
 keysNum [x:xs] = 1 + keysNum xs
 
-
 valueForKey::(Dictionary String Int) String -> Int
 valueForKey list k
 |isEmpty [x \\ x<-list |fst x == k] = abort "The key is not in the dictionary"
 = snd (hd [x \\ x<-list |fst x == k])
-
 
 insert::(Dictionary String Int) (String,Int)->(Dictionary String Int)
 insert list new
@@ -235,7 +214,7 @@ If the skill of the player is greater or equal than the skill of the goalkeeper,
 The team would win this virtual game, if at least 3 or more penalties could be scored against the given goalkeeper.
 */
 
-::APlayer = { name ::String, skillLevel :: Int}
+:: APlayer = { name ::String, skillLevel :: Int}
 shouldWePlay :: [APlayer] APlayer -> Bool
 shouldWePlay list defender = help list defender >= 3
 where
@@ -250,7 +229,6 @@ where
 // Start = shouldWePlay [{name = "kareem", skillLevel = 5},{name = "Tarek", skillLevel = 4},{name = "Ali", skillLevel = 3},{name="Hussien", skillLevel=2},{name="Ziad", skillLevel=4}] {name="Gemy", skillLevel=4} // True
 
 //-------------------------------------------------------------------------------
-
 
 /*
     6. Given a predefined MaybeInt type, define a new operator !+!
@@ -290,15 +268,10 @@ showFifthElement xs
 // true for node's value).
 
 :: NodeColor = Red | Green | Blue
-
 :: FilterType = AND | OR
-
 :: ColoredRoseTree a = Node a NodeColor [ColoredRoseTree a] | Leaf
 
-
-// TODO
 //filterColoredTree :: (ColoredRoseTree a) NodeColor FilterType (a -> Bool) (a -> Bool) -> [a]
-
 
 tree1 = Node 1 Red [(Node 2 Blue [Node 4 Blue []]), Leaf, Leaf, (Node 3 Blue [Leaf,Leaf])]
 tree2 = Node 1 Red [(Node 2 Blue [Node 4 Blue []]), Leaf, Leaf, (Node 3 Blue [Leaf,Node 7 Red [Node 9 Red [], Node 10 Red []]])]
@@ -336,27 +309,15 @@ where
 //-------------------------------------------------------------------------------
 
 
-//another endterm
-
-
-module kairat
-import StdEnv
-
-
+// -----------------------another endterm----------------------------------------
 /* 3
 
  Create an instances +, -, <, == for RGBColor
-
  + should add respective parameters
-
  - should subtract respective parameters
-
  == is true if all thre parameters are equal
-
  < Compare them lexicographically (if reds are equal compare greens and so on)
-
 */
-
 :: RGBColor = { r :: Int, g :: Int, b :: Int}
 
 instance + RGBColor
@@ -389,131 +350,58 @@ where
 //Start = {r = 30, g = 150, b = 231} < {r = 30, g = 150, b = 231} // False
 //Start = {r = 30, g = 150, b = 231} < {r = 30, g = 151, b = 231} // True
 
-
-
 :: Major = Finance | CS | Math | Physics | Economy | Linguistics
-
-
 :: Course = {name::String, major::Major, credits::Int}
-
-
-
-
 OOP::Course
-
-
 OOP = {name="OOP",major=CS, credits=5}
-
-
 Discrete_math::Course
-
-
 Discrete_math = {name="Discrete_math",major=Math, credits=4}
-
-
 Relativity::Course
-
-
 Relativity = {name="Relativity", major=Physics, credits=6}
-
-
 Functional::Course
-
-
 Functional = {name="Functional", major=CS, credits=5}
-
-
 Quantum_mechanics::Course
-
-
 Quantum_mechanics = {name="Quantum_mechanics", major=Physics, credits=4}
-
-
 Corporate_finance::Course
-
-
 Corporate_finance = {name="Corporate_finance", major=Finance, credits=6}
-
-
 Venture_captical::Course
-
-
 Venture_captical = {name="Venture_captical", major=Finance, credits=6}
-
-
 Macroeconomics::Course
-
-
 Macroeconomics = {name="Macroeconomics", major=Economy, credits=6}
-
-
 Microeconomics::Course
-
-
 Microeconomics = {name="Microeconomics", major=Economy, credits=6}
-
-
 Numerical_Methods::Course
-
-
 Numerical_Methods = {name="Numerical_Methods", major=Math, credits=4}
-
-
 Cryptography::Course
-
-
 Cryptography = {name="Cryptography", major=CS, credits=2}
-
-
 Phonology::Course
-
-
 Phonology = {name="Phonology", major=Linguistics, credits=3}
-
-
 Morphology::Course
-
-
 Morphology = {name="Morphology", major=Linguistics, credits=3}
-
-
 
 /* 5
 
  Create an instance `-` for the record Course, 
-
  such that two records A and B when subtracted (A-B) will give
-
  a record Course whose name is the first letter of A's name, 
-
  major is B's major and credits is A's credits
-
  minus B's credits
-
 */
-
 //:: Course = {name::String, major::Major, credits::Int}
-
 instance - Course
 where
 	(-) a b = {name = toString(a.name.[0]), major = b.major, credits = a.credits - b.credits}
 
-
 //Start = Morphology - Quantum_mechanics // (Course "M" Physics -1)
-
 //Start = Corporate_finance - OOP // (Course "C" CS 1)
-
 //Start = Quantum_mechanics - Relativity // (Course "Q" Physics -2)
 
 
 /* 9
 
  Having a DAY algebraic data type, write a function
-
  to output the day after n days of the day.
-
  for example: MONDAY 2 -> WEDNESDAY
-
 */
 
 daytonum :: DAY -> Int
@@ -534,7 +422,6 @@ numtoday 4 = FRIDAY
 numtoday 5 = SATURDAY
 numtoday 6 = SUNDAY
 
-
 :: DAY = MONDAY | TUESDAY | WEDNESDAY | THURSDAY | FRIDAY | SATURDAY | SUNDAY
 
 getDay :: DAY Int -> DAY
@@ -549,20 +436,13 @@ getDay day n = numtoday (((daytonum day) + n) rem 7 )
 /* 7
 
  A coach is trying to choose the player of the year, in his team
-
  so let's help him/her doing that, the coach wants the player to have the
-
  highest overall.
-
  The coach is adding 0.1 to the overall if the player was good.
-
  NOTE: If there are two players with the highest overall, choose any.
-
 */
 
-
 ::Status = Good | Bad
-
 ::Player = {player_name :: String, overall :: Real, status :: Status}
 
 instance == Status
@@ -590,15 +470,11 @@ bestPlayer [x:xs] = maxList [changeOver p\\p <- [x:xs] | p.status == Good]
 //Start = bestPlayer [{player_name = "Khalid", overall = 3.7, status = Bad},{player_name = "Peter", overall = 3.7, status = Good},{player_name = "Yoko", overall = 2.9, status = Bad}] // (Player "Peter" 3.8 Good)
 
 
-
 /* 1
 
  Given an array of tuples of empty or single element lists.
-
  Give back a list of arrays in the following form
-
  {([2],[1]),([3],[4]),([5],[])} -> [{2,1},{3,4},{5,0}]
-
 */
 
 conv :: ([Int],[Int]) -> {Int}
@@ -620,29 +496,16 @@ conversion array = map conv (toList array)
 
 
 /* 2
-
  Given an array of arrays of triples of Ints and a condition over triples of Ints.
-
  Return the index of the subarray having the highest number of triples satisfying the condition.
-
  In case there are more subarrays with the same number return the first one.
-
  indexing starts from 1 (i+1).
-
-
-
  Example:
-
  {{(1,2,3)},{(2,2,2),(3,3,3),(3,3,3)},{(1,1,1)}} condition: all 3 numbers are the same ->
-
  first subarray - 0
-
  second subarray - 3
-
  third subarray -1 
-
  Solution: 2 (because the second array has the highest count)
-
 */
 
 condit :: {(Int,Int,Int)} ((Int,Int,Int)->Bool) -> Int
@@ -683,8 +546,6 @@ majtonum Physics = 369
 majtonum Economy = 358
 majtonum Linguistics = 320
 
-
-
 value :: [Course] -> [(String, Real)]
 value [] = abort "None"
 value [x:xs] = [(x.name, toReal((majtonum x.major)/15/5)/toReal(x.credits))\\x <- [x:xs]]
@@ -700,14 +561,206 @@ valuable [] = abort "None"
 valuable list = maxList (value list)
 
 //Start = valuable [Corporate_finance, OOP, Microeconomics] // ("OOP",1)
-
 //Start = valuable [Morphology, Macroeconomics, Quantum_mechanics] // ("Morphology",1.42222222222222)
-
 //Start = valuable [Venture_captical, Relativity, Cryptography] // ("Cryptography",2.5)
-
 //Start = valuable [Discrete_math] // ("Discrete_math",1.16666666666667)
-
 //Start = valuable [] // "None"
+
+//------------------another endterm-----------------------------------------------------
+
+// 7.
+/*
+Given a list of Planets write a function which returns the average of the sun distance from all
+the planets whose name don't start with an 'M' or end with a 's'.
+*/
+
+valid :: String -> Bool
+valid str
+| str.[0] == 'M' || str.[((sum[1\\x <-: str])-1)] == 's' = False
+= True
+//Start = valid "Mer"
+//Start = sum[1\\x <-: "Mama"]
+//Start = "Mama".[sum[1\\x <-: "Mama"] - 1]
+
+avgCond :: [Planet] -> Real
+avgCond [] = 0.0
+avgCond [x:xs] 
+| (sum[x.sunDistance\\ x <- [x:xs] | valid x.name]) <> 0.0 = avg [x.sunDistance\\ x <- [x:xs] | valid x.name]
+= 0.0
+//Start = avgCond SolarSystem // 2552.62
+//Start = avgCond [Jupiter,Mars] // 778.5
+//Start = avgCond [Mercury,Venus] // 0.0
+
+// 5.
+// Given a tree, traverse it in level order.
+// starting at the root element, then all elements below (left to right), then all
+// elements below those (left to right), etc.
+// Example:
+// 1
+// / \
+// 2 3
+// / \ / \
+// 4 5 6 7
+// Should return [1,2,3,4,5,6,7]
+
+level :: (Tree Int) -> Int
+level Leaf = 0
+level (Node x l r) = 1 + maxList[(level r), (level l)]
+//Start = level (Node 4 (Node 3 (Node 3 (Node 2 (Node 1 Leaf Leaf) Leaf) Leaf) (Node 4 Leaf Leaf)) (Node 5 (Node 5 Leaf Leaf) (Node 6 Leaf Leaf))) // [4,3,5,3,4,5,6,2,1]
+
+currLevel :: Int (Tree Int) -> [Int]
+currLevel _ Leaf = []
+currLevel level (Node x l r) 
+| level == 0 = [x]
+| level > 0 = (currLevel (level-1) l) ++ (currLevel (level-1) r)
+
+traverse :: (Tree Int) -> [Int]
+traverse Leaf = []
+traverse (Node x l r) = flatten[currLevel a (Node x l r)\\a <- [0..(level (Node x l r))]]
+//Start = traverse (Node 15(Node 3(Node 1 Leaf Leaf)(Node 10(Node 7 Leaf (Node 8 Leaf Leaf))(Node 13 (Node 11 Leaf Leaf) Leaf)))(Node 20 (Node 18 Leaf (Node 19 Leaf Leaf)) (Node 21 Leaf (Node 26 (Node 24 Leaf Leaf) (Node 28 Leaf Leaf))))) // [15,3,20,1,10,18,21,7,13,19,26,8,11,24,28]
+//Start = traverse (Node 4 (Node 3 (Node 3 (Node 2 (Node 1 Leaf Leaf) Leaf) Leaf) (Node 4 Leaf Leaf)) (Node 5 (Node 5 Leaf Leaf) (Node 6 Leaf Leaf))) // [4,3,5,3,4,5,6,2,1]
+
+
+// 1.
+// Write function that takes String as input and removes vowels from it
+
+removeVowels :: String -> String
+removeVowels str = { ch \\ ch <-: str | ch <> 'a' && ch <> 'e' && ch <> 'i' && ch <> 'o' && ch <> 'u'}
+
+// Start = removeVowels "Xola" // "Xl"
+// Start = removeVowels "Functional Programming" // "Fnctnl Prgrmmng"
+// Start = removeVowels "Clean is the best" // "Cln s th bst"
+// Start = removeVowels "Not really" // "Nt rll"
+// Start = removeVowels "" // ""
+// Start = removeVowels "N vwls hr" // "N vwls hr"
+
+
+::PlanetType = Normal | Dwarf
+
+::Planet={name:: String,sunDistance::Real,type::PlanetType,speedAroundSun::Int,radius :: Real}
+
+Mercury::Planet
+Mercury={name="Mercury",sunDistance=57.91,type=Normal,speedAroundSun=172404,radius=2439.7}
+Venus::Planet
+Venus={name="Venus",sunDistance=108.2,type=Normal,speedAroundSun=126108, radius=6051.8}
+Earth::Planet
+Earth={name="Earth",sunDistance=149.6,type=Normal,speedAroundSun=107244, radius=6371.0}
+Mars::Planet
+Mars={name="Mars",sunDistance=227.9,type=Normal,speedAroundSun=86868,radius=3389.5}
+Jupiter::Planet
+Jupiter={name="Jutpiter",sunDistance=778.5,type=Normal,speedAroundSun=47016,radius=69911.0}
+Saturn::Planet
+Saturn={name="Saturn",sunDistance=1434.0,type=Normal,speedAroundSun=34705,radius=58232.0}
+Uranus::Planet
+Uranus={name="Uranus",sunDistance=2871.0,type=Normal,speedAroundSun=24516,radius=25362.0}
+Neptune::Planet
+Neptune={name="Neptune",sunDistance=4495.0,type=Normal,speedAroundSun=19548,radius=24622.0}
+Pluto::Planet
+Pluto={name="Pluto",sunDistance=5906.0,type=Dwarf,speedAroundSun=17064,radius=1188.3}
+
+SolarSystem=[Mercury,Venus,Earth,Mars,Jupiter,Saturn,Uranus,Neptune,Pluto]
+
+ 
+
+:: Tree a = Node a (Tree a) (Tree a) | Leaf
+
+
+tree1= (Node Mars (Node Earth (Node Venus Leaf Leaf)(Node Uranus Leaf Leaf)) (Node Jupiter (Node Saturn Leaf Leaf) Leaf))
+onlyLeft = (Node Pluto (Node Jupiter (Node Uranus (Node Earth (Node Mercury Leaf Leaf) Leaf) Leaf) Leaf) Leaf)
+onlyRight = (Node Jupiter Leaf (Node Neptune Leaf (Node Venus Leaf (Node Pluto Leaf Leaf))))
+allGreater = (Node Pluto (Node Mercury (Node Mars Leaf Leaf) (Node Earth Leaf Leaf )) (Node Venus (Node Saturn Leaf Leaf ) (Node Neptune (Node Uranus Leaf Leaf) (Node Jupiter Leaf Leaf ) )) )
+
+
+// 6.
+/*
+Write a function which takes a lists of Planets and produces a list of tuples
+containg the name, distance from Sun and speed from Sun for the planets of normal type.
+*/
+
+instance == PlanetType
+where
+	(==) Normal Normal = True
+	(==) Dwarf Dwarf = True
+	(==) _ _ = False
+
+norm :: Planet -> (String, Real, Int)
+norm x = (x.name, x.sunDistance, x.speedAroundSun)
+
+normal::[Planet] -> [(String, Real, Int)]
+normal [] = []
+normal [x:xs]
+| x.type == Normal = [norm x] ++ normal xs
+= normal xs
+//Start = normal SolarSystem // [("Mercury",57.91,172404),("Venus",108.2,126108),("Earth",149.6,107244),("Mars",227.9,86868),("Jutpiter",778.5,47016),("Saturn",1434,34705),("Uranus",2871,24516),("Neptune",4495,19548)]
+
+//----------------------------some random tasks--------------------------------------
+
+numToBin :: Int -> [Int]
+numToBin 0 = []
+numToBin n = ([(n rem 2)] ++ numToBin (n/2))
+//Start = reverse (numToBin 233)
+
+/*3.Write a function which takes positive integer or zero and returns True if the number 
+od 1's in the binary form of that number is greater than the number of 0's*/
+More1sThan0s :: Int -> Bool
+More1sThan0s 0 = False
+More1sThan0s n
+| (length [1\\x <- (numToBin n) | x == 1]) > (length [1\\x <- (numToBin n) | x == 0]) = True
+= False
+
+//Start=More1sThan0s 0//Fasle 0=0
+//Start=More1sThan0s 1024//False 1024=10000000000
+//Start= More1sThan0s 54 //True 54=110110
+//Start=More1sThan0s 127//True 127=1111111
+
+
+// The distance between a node in a Binary Tree and the tree's root is called node's depth
+// Write a function that takes in Binary Tree and returns the sum of its nodes' depths.
+
+/*
+Example:
+        1
+     /    \ 
+    2      3
+  /   \   / \
+ 4     5 6   7
+/\        
+8 9
+*/
+
+//Answer: 16
+// The depth of the node with value 2 is 1
+// the depth of the node with value 3 is 1
+// the depth of the node with value 4 is 2
+// the depth of the node with value 5 is 2
+// Etc...
+// Summing all of these depths yeilds 16.
+
+:: Tree a = Node a (Tree a) (Tree a) | Leaf
+
+extractNode :: (Tree a) -> a
+extractNode (Node x l r) = x
+
+treeToList :: (Tree a) -> [a]
+treeToList Leaf = []
+treeToList (Node x l r) = treeToList(l)++[extractNode (Node x l r)]++treeToList(r)
+
+getLev :: Int Int (Tree Int) -> Int
+getLev _ _ Leaf = 0
+getLev node level (Node x l r)
+| x == node = level
+= (getLev node (level+1) l) + (getLev node (level+1) r)
+//Start = getLev 5 0 (Node 1 (Node 2 (Node 4 (Node 8 Leaf Leaf) (Node 9 Leaf Leaf)) (Node 5 Leaf Leaf)) (Node 3 (Node 6 Leaf Leaf) (Node 7 Leaf Leaf)))
+
+node_depth :: (Tree Int) -> Int
+node_depth Leaf = 0
+node_depth (Node x l r) = sum[(getLev a 0 (Node x l r))\\a <- (treeToList (Node x l r) ) | a <> x]
+//Start = node_depth (Node 1 (Node 2 (Node 4 (Node 8 Leaf Leaf) (Node 9 Leaf Leaf)) (Node 5 Leaf Leaf)) (Node 3 (Node 6 Leaf Leaf) (Node 7 Leaf Leaf)))
+
+
+
+
+
 
 
 
